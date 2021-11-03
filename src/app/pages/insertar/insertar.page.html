@@ -1,4 +1,11 @@
-<app-page-header titulo="Insertar"></app-page-header>
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button defaultHref="\" mode="ios" (click)="modal.dismiss()">Atrás</ion-button>
+    </ion-buttons>
+    <ion-title class="ion-text-uppercase">Insertar</ion-title>
+  </ion-toolbar>
+</ion-header>
 
 <ion-content>
   <form #insertForm="ngForm">

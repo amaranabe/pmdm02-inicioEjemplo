@@ -1,3 +1,4 @@
+import { GestionPersonasService } from './../../servicios/gestion-personas.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,14 +7,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./borrar.page.scss'],
 })
 export class BorrarPage implements OnInit {
-  indice: number;
+  indice: string;
 
-  constructor() { }
+  constructor(private gestionPersonas: GestionPersonasService) { }
 
   ngOnInit() {
   }
 
   onClick() {
     // Borrar
+    this.gestionPersonas.borrarPersona(this.indice);
   }
 }
