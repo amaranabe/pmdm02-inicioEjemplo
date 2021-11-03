@@ -1,37 +1,40 @@
+import { IPersona } from './../pages/home/home.page';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
-
-export interface IPersona {
-  id: string;
-  nombre: string;
-  apellido: string;
-}
 
 //Clase que se podrá utilizar desde cualquier otro componente de la aplicación
 @Injectable({
   providedIn: 'root'
 })
 export class GestionPersonasService {
-  //array de tipo IPersona que se muestra al iniciar la app
-  private personas: IPersona[] = [
-    {
-      id: "aa",
-      nombre: "Aitor",
-      apellido: "Arana"
-    },
-    {
-      id: "sr",
-      nombre: "Sara",
-      apellido: "Ruiz"
-    },
-    {
-      id: "mo",
-      nombre: "Miren",
-      apellido: "Ojer"
-    }
-  ]
+  
+  //Lectura de fichero json
+  //eliminamos los datos del array de tipo IPersona, pero declaramos esa variable
+  private personas: IPersona[] = [];
 
-  constructor() { }
+  //inicializamos el servicio HttpClient
+  constructor(private leerFichero: HttpClient) { 
+    this.getPersonasFichero();
+  }
+
+  //Método que leerá un fichero JSON usando una clase Observable
+  getPersonasFichero() {
+
+    //declaramos un observable
+    let datosFichero: Observable<IPersona[]>;
+
+    //inicializamos
+    datosFichero=this.leerFichero.get<IPersona[]>("/assets/datos/personas.json");
+
+    //subscripción
+    datosFichero.subscribe(datos => {
+      console.log(datos);
+      this.personas.push(...datos); //asignamos los datos al array personas
+    });
+
+  }
 
   //Metodo que puestra las personas almacendas en un array
   getPersonas() {
